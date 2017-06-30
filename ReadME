@@ -1,8 +1,7 @@
 ﻿Projekat Android aplikacije koja prepoznaje tenk na ucitanoj slici/videu.
 
-U prilogu je sama aplikacija (APK fajl koji se instalira na uredjaju), 
-source kod aplikacije (gradle fajl i src folder) za android kao i par pomoćnih skripti koje sam koristio prilikom pripremanja
-podataka za pravljene sopstvenog klasifikatora u opencv_traincascade.
+U prilogu je sama aplikacija (APK fajl koji se instalira na uredjaju), source kod aplikacije (gradle fajl i src folder) za android 
+kao i par pomoćnih skripti koje sam koristio prilikom pripremanja podataka za pravljene sopstvenog klasifikatora u opencv_traincascade.
 
 Koriscena je biblioteka OPENCV, uz pomocu koje je treniran klasifikator. Da bi se klasifikator trenirao potrebno je bilo skupiti
 dovoljno pozitivnih i negativnih uzoraka fotografija. Pozitivni uzorak je ona gdje je iskljucivo objekat od interesa sa nekom monotonom pozadinom,
@@ -16,12 +15,17 @@ cisti utf8 fajl. Zbog nedostatka vremena jer mislim da bi bar dva-tri dana jos t
 koji sam napravio, a koji ne radi kako bi trebalo do kraja (prepoznaje tenkove ali desi se ponekad da brljavi).
 
 Pomoćni alat koji sam koristio omogućava da se napravi .txt fajl koji sadrži spisak pozitivnih uzoraka kao i koordinate objekta 
-koji nas zanima(tj kropovanje slike da se izdvoji objekat od interesa, tj tenk). Primjenom 2 bat skripte su dodate apsolutne putanje u taj fajl 
-i kreirani su sampleovi kao .vec fajl pomoću opencv_createsamples. 
-Nakon toga je počeo proces treniranja klasifikatora bat skriptom traincasc.bat. Taj klasifikator koji se dobija, a to je cascade.xml se ubaci u APK fajl
-Android aplikacije. Nakon toga mozemo vrsiti prepoznavanje objekta
+koji nas zanima (tj kropovanje slike da se izdvoji objekat od interesa,a to je tenk). Primjenom dvije .bat skripte su dodate apsolutne putanje do 
+uzoraka u taj fajl i kreirani su sampleovi kao .vec fajl pomoću opencv_createsamples. Nakon toga je počeo proces treniranja klasifikatora bat 
+skriptom traincasc.bat. Taj klasifikator koji se dobija, a to je cascade.xml se ubaci u APK fajl Android aplikacije. Nakon toga mozemo vrsiti 
+prepoznavanje objekta.
 
 OPENCV biblioteka je ukljucena unutar Android projekta, ne inicjalizuje se preko asyncInit().
+
+Sto se tice vas, OPENCV vam nije potreban jer vi necete vrisiti trening klasifikatora - dovoljno je samo da pokrenete APK na 
+androidu (ostalo sam dao da bi imali i pregled koda i koraka koje sam odradio).
+
+
 Što se same implementacije tiče, postoje 3 načina korišćenja aplikacije. 
 
 1. Korisnik odabere fotografiju,koja zatim prolazi kroz opencv i kao rezultat dobija se fotografija koja ima pravougaonik u dijelu gdje je traženi objekat

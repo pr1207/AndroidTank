@@ -1,0 +1,1 @@
+for /F "delims=" %%j in (neg.txt) do echo.C:\Users\User\Desktop\negCon\%%j >> negatives.txt

@@ -1,0 +1,1 @@
+C:\opencv\build\x64\vc12\bin\opencv_traincascade.exe -data G01 -vec G01VEKTOR.vec -bg negativesNo.txt -numStages 15 -minHitRate 0.998 -maxFalseAlarmRate 0.5 -numPos 69 -numNeg 361 -w 24 -h 24 -mode ALL -precalcValBufSize 1024 -precalcIdxBufSize 1024

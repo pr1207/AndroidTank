@@ -1,0 +1,1 @@
+C:\opencv\build\x64\vc12\bin\opencv_createsamples.exe -info positives.txt -vec G01VEKTOR.vec -num 69 -w 24 -h 24 PAUSE

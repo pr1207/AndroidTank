@@ -1,0 +1,43 @@
+﻿Projekat Android aplikacije koja prepoznaje tenk na ucitanoj slici/videu.
+
+U prilogu je sama aplikacija (APK fajl koji se instalira na uredjaju), 
+source kod aplikacije (gradle fajl i src folder) za android kao i par pomoćnih skripti koje sam koristio prilikom pripremanja
+podataka za pravljene sopstvenog klasifikatora u opencv_traincascade.
+
+Koriscena je biblioteka OPENCV, uz pomocu koje je treniran klasifikator. Da bi se klasifikator trenirao potrebno je bilo skupiti
+dovoljno pozitivnih i negativnih uzoraka fotografija. Pozitivni uzorak je ona gdje je iskljucivo objekat od interesa sa nekom monotonom pozadinom,
+negativni je sve ostalo.
+
+Prvi klasifikator koji sam napravio na oko 80 pozitivnih (gdje su samo slike tenka i neke monotone pozadine - trava,pustinja itd) 
+i 500 negativnih je uglavnom prepoznavao objekte ali je imao mnogo false-positives zbog nedovoljnog broja uzoraka.
+
+Nakon toga sam pokrenuo treniranje klasifikatora sa 400 pozitivnih uzoraka i 20 stageova i u toku noci je negdje pukao jer TXT spisak negativnih nije bio
+cisti utf8 fajl. Zbog nedostatka vremena jer mislim da bi bar dva-tri dana jos trebalo, moram da posaljem zadatak sa do sad najboljim klasifikatorom
+koji sam napravio, a koji ne radi kako bi trebalo do kraja (prepoznaje tenkove ali desi se ponekad da brljavi).
+
+Pomoćni alat koji sam koristio omogućava da se napravi .txt fajl koji sadrži spisak pozitivnih uzoraka kao i koordinate objekta 
+koji nas zanima(tj kropovanje slike da se izdvoji objekat od interesa, tj tenk). Primjenom 2 bat skripte su dodate apsolutne putanje u taj fajl 
+i kreirani su sampleovi kao .vec fajl pomoću opencv_createsamples. 
+Nakon toga je počeo proces treniranja klasifikatora bat skriptom traincasc.bat. Taj klasifikator koji se dobija, a to je cascade.xml se ubaci u APK fajl
+Android aplikacije. Nakon toga mozemo vrsiti prepoznavanje objekta
+
+OPENCV biblioteka je ukljucena unutar Android projekta, ne inicjalizuje se preko asyncInit().
+Što se same implementacije tiče, postoje 3 načina korišćenja aplikacije. 
+
+1. Korisnik odabere fotografiju,koja zatim prolazi kroz opencv i kao rezultat dobija se fotografija koja ima pravougaonik u dijelu gdje je traženi objekat
+(ukoliko postoji na slici).
+
+2. Korisnik odabere video, iz kojega prvo izvadimo frejmove na svakih 1sec i onda te frejmove pojedinačno provlačimo kroz
+opencv, i na svaki sekund ih u View-u u androidu prikazujemo.
+
+3. Korisnik odabere Real-Time, otvara se prikaz kamere koja u realnom vremenu detektuje tražene objekte. 
+
+Problemi:
+- Osim problema sa klasifikatorom, postoji problem i sa obradom 
+videa. Naime, bibiloteke koje sam pokušavao koristiti često su rezultovale ili null frameovima ili OutOfMemory greškama, 
+sad da li je vezano i do konkretnog uredjaja na kome sam testirao nisam siguran.
+Na kraju sam riješio stvar tako što se iz videa skida frejm na svaki sekund, provlači kroz opencv 
+i rezultujuća slika skalira kao bitmapa na maksimalnu dimenziju od 250px (po širini ili dužini), 
+i to nativnom bibliotekom koja ne vadi konkretan frejm već prvi reprezentativni u njegovoj okolini 
+(pretpostavljam da se ovo koristi kod generisanja thumbnailova i da nije baš najsrećnije
+ rešenje ali je jedino što sam uspio da natjeram da radi a da ne dobijam gore pomenute exceptione).
